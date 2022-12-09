@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# Adept Frontend Project Instructions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal of this project is to create a calendar web application that has a natural language interface for creating and editing meetings. There should be a UI for viewing the meetings. The natural language instructions should be translated into a calendar DSL via a large language model and your app should work with that DSL.
 
-## Available Scripts
+Please add notes to `notes.md` to provide context around design decisions. This is a fairly open-ended project, so feel free to use `notes.md` to explain the scope you have chosen (i.e. what should and shouldn't work). There is a lot to be done at a startup like Adept and choosing which problems to solve and which not to is an important skill.
 
-In the project directory, you can run:
+By default we will use `npm install` && `npm run start` to test the completed project. If there are different instructions we should follow, please add them to `notes.md`
 
-### `npm start`
+## Must-have requirements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- There must be a UI for viewing the meetings in a day or week. Whether to have a day view, week view or both is up to you.
+- There must be a UI for viewing the details of a specific meeting
+- There must be the ability to use natural language to create meetings
+- There must be the ability to change the details of a meeting. This can be done with traditional UI elements (if you would like to do this with natural language, note that it requires some additional prompt setup work to ensure that the model sees the original details of the meeting to be changed). 
+- This project must be implemented in Javascript or Typescript
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Non-requirements
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Data persistence and ability for multiple people to see the same calendar are not requirements for this project. Unless otherwise instructed by you through `notes.md`, this will be tested in the context of one person starting up the project, creating and editing meetings, and expecting the calendar state to persist for the duration of the testing session.
 
-### `npm run build`
+This `create-react-app` base is provided as a convenience, but you are free to change anything about it or discard it. Just make sure to have instructions in `notes.md` for how to setup and test your project.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You do not need to spend time thinking about timezones. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## GPT-3 Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+We have provided an example set of natural language commands in `hardcoded.json` with a hardcoded DSL output. This can be used for initial testing. The user's name in these examples is Alice. 
 
-### `npm run eject`
+We have also provided a library in `src/lib/gpt.js` that will call the GPT-3 API to output DSL based on natural language input. There is a prompt in that library. If you would like, you can change the prompt and/or DSL.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+There is a set of commands that we will use verbatim in `examples.txt` when testing the project. These commands have been confirmed to give correct DSL output from the GPT-3 API. If you edit the prompt, please update `examples.txt` to have a new golden set of examples for testing.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This is a project to evaluate frontend ability and does not expect any LLM or prompt engineering expertise. Using the provided library and examples as-is is a perfectly valid approach to this project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### DSL
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The output of the language model should be a structured output. In this case we are using a JSON-based DSL where the model outputs information about the desired state of the meeting. The DSL is best understood by reading the prompt in `src/lib/gpt.js`
 
-## Learn More
+The title of a meeting can be assumed to be unique and treated as an ID.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

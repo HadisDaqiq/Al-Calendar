@@ -1,0 +1,10 @@
+[
+  {
+    "input": "Create a 30 minute zoom meeting on December 9th at 10am about the product launch. Include Josh and Cliff.",
+    "Output": {"TITLE": "Product launch", "ATTENDEES": "Alice, Josh, Cliff", "START_TIME": "2022-12-09T18:00:00+0000", "DURATION": 30, "VIDEO": "ZOOM"}
+  },
+  {
+    "input": "New meeting on December 20th at 3pm between me and Josh",
+    "Output": {"TITLE": "Alice / Josh", "ATTENDEES": "Alice, Josh", "START_TIME": "2022-12-20T23:00:00+0000", "DURATION": 30, "VIDEO": "NONE"}
+  }
+]
