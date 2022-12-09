@@ -10,8 +10,8 @@ By default we will use `npm install` && `npm run start` to test the completed pr
 
 - The UI should show meetings for a day or a week. Whether to have a day view, week view or both is up to you.
 - The user should be able to see details of a specific meeting.
-- Natural language should be entered by the user in order to manipulate meetings
-- Users should also be able to change the details of specific meetings. This can be done with traditional UI elements (if you would like to do this with natural language, note that it requires some additional prompt setup work to ensure that the model sees the original details of the meeting to be changed). 
+- Natural language should be entered by the user in order to create meetings. 
+- Users should also be able to change the details of specific meetings. This should be done with traditional UI elements. (If you would like to do this with natural language, note that the model doesn't work now. It will require some additional prefix prompt setup work to ensure that the model sees the original details of the meeting to be changed). 
 - Either Javascript or Typescript should be used.
 
 ## Non-requirements
