@@ -22,11 +22,11 @@ This `create-react-app` base is provided as a convenience, but you are free to c
 
 ## GPT-3 Usage
 
-We have provided an example set of natural language commands in `hardcoded.json` with the hardcoded DSL output. This can be used for initial testing. The user's name in these examples is Alice. 
+We have provided an example set of natural language commands in `src/lib/hardcoded.json` with the hardcoded DSL output. This can be used for testing. The user's name in these examples is Adept. Note that the hardcoded nature of this output means that all dates are relative to December 9th, 2022.
 
 We have also provided a library in `src/lib/gpt.js` that will call the GPT-3 API to produce our DSL-based commands. There is a prefix prompt in that library. If you would like, you can change the prompt and/or DSL.
 
-There is a set of commands that we will use verbatim in `examples.txt` when testing the project. These commands have been confirmed to give correct DSL output from the GPT-3 API. If you edit the prompt, please update `examples.txt` to have a new golden set of examples for testing.
+There is the set of commands that we will use verbatim in `examples.txt` when testing the project (these are identical to the prompts in `hardcoded.json`). These commands have been confirmed to give correct DSL output from the GPT-3 model. If you edit the prompt, please update `examples.txt` to have a new golden set of examples for testing.
 
 This is a project to evaluate frontend ability and does not expect any LLM or prompt engineering expertise. Using the provided library and examples as-is is a perfectly valid approach to this project.
 

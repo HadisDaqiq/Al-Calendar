@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import './lib/gpt';
 
 function App() {
   return (
