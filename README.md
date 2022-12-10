@@ -4,7 +4,7 @@ The goal of this project is to create a calendar web application using a natural
 
 Please add notes to `notes.md` to provide context around design decisions. This is an open-ended project, so feel free to use `notes.md` to explain the scope you have chosen (e.g. what should and shouldn't work). There is a lot to be done at a startup like Adept and choosing which problems to solve and which not to is an important skill.
 
-By default we will use `npm install` && `npm run start` to test the completed project. If there are different instructions we should follow, please add them to `notes.md`
+By default, we will use `npm install` && `npm run start` to test the completed project. If there are different instructions we should follow, please add them to `notes.md`
 
 ## Must-have requirements
 
@@ -18,7 +18,7 @@ By default we will use `npm install` && `npm run start` to test the completed pr
 
 We don't need multiuser capabilities or data persistence. Everything will be in the same timezone. Unless otherwise instructed by you through `notes.md`, this will be tested in the context of one person starting up the project, creating and editing meetings, and expecting the calendar state to last for the duration of the testing session.
 
-This `create-react-app` base is provided as a convenience, but you are free to change anything about it or discard it. Just make sure to have instructions in `notes.md` for how to setup and test your project.
+This `create-react-app` base is provided as a convenience, but you are free to change anything about it or discard it. Just make sure to have instructions in `notes.md` for how to set up and test your project.
 
 ## GPT-3 Usage
 
