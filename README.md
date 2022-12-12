@@ -11,7 +11,7 @@ By default, we will use `npm install` && `npm run start` to test the completed p
 - The UI should show meetings for a day or a week. Whether to have a day view, week view or both is up to you.
 - The user should be able to see details of a specific meeting.
 - Natural language should be entered by the user in order to create meetings. 
-- Users should also be able to change the details of specific meetings. This should be done with traditional UI elements. (If you would like to do this with natural language, note that the model doesn't work now. It will require some additional prefix prompt setup work to ensure that the model sees the original details of the meeting to be changed). 
+- Users should also be able to change the details of specific meetings. This should be done with traditional UI elements. (If you would like to do this with natural language, note that the existing function won't work. It will require some additional prefix prompt setup work to ensure that the model sees the original details of the meeting to be changed). 
 - Either Javascript or Typescript should be used.
 
 ## Non-requirements
@@ -24,7 +24,7 @@ This `create-react-app` base is provided as a convenience, but you are free to c
 
 We have provided an example set of natural language commands in `src/lib/hardcoded.json` with the hardcoded DSL output. This can be used for testing. The user's name in these examples is Adept. Note that the hardcoded nature of this output means that all dates are relative to December 9th, 2022.
 
-We have also provided a library in `src/lib/gpt.js` that will call the GPT-3 API to produce our DSL-based commands. There is a `askModelForDslMeeting` function that calls the GPT-3 API and there is an API-compatible `askModelForDslMeetingHardcoded` function that only uses the `hardcoded.json`. There is a prefix prompt in that library. If you would like, you can change the prompt and/or DSL. 
+We have also provided a library in `src/lib/gpt.js` that will call the GPT-3 API to produce our DSL-based commands. There is a `askModelForDslMeeting` function that calls the GPT-3 API. There is an API-compatible `askModelForDslMeetingHardcoded` function that only uses the `hardcoded.json`. There is a prefix prompt in that library. If you would like, you can change the prompt and/or DSL. 
 
 There is the set of commands that we will use verbatim in `examples.txt` when testing the project (these are identical to the prompts in `hardcoded.json`). These commands have been confirmed to give correct DSL output from the GPT-3 model. If you edit the prompt, please update `examples.txt` to have a new golden set of examples for testing.
 
