@@ -1,7 +1,7 @@
 import hardcoded from './hardcoded.json'
 
 
-const openai_key = `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`;
+const openai_key = `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`;
 
 /**
  * This builds the prefix of the prompt passed into GPT-3. This is where the DSL format is defined.
