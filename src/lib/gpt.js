@@ -17,7 +17,8 @@ export function createPromptPrefix(name_str, natural_language_command) {
     const [tomorrowStr] = tomorrow.toISOString().split('T');
 
     return `
-You are a tool for scheduling meeting using natural language. You will take in a natural language instruction to schedule a meeting and output a JSON representing the desired meeting, That JSON must have the following fields:
+You are a tool for scheduling meeting using natural language. You will take in a natural language instruction
+ to schedule a meeting and output a JSON representing the desired meeting, That JSON must have the following fields:
 
 TITLE: The name of the meeting
 ATTENDEES: A comma separated list of attendee names. Unless explicitly stated, the person scheduling the meeting will always be attending.
@@ -26,7 +27,6 @@ DURATION: An integer representing the number of minutes the meeting should last.
 VIDEO: Which, if any, video chat software should be used. This can be either NONE, MEET, or ZOOM. If no one is calling in, the default should be NONE. Unless explicitly stated, we assume that no one is calling in remotely. If we need video conferencing because someone is calling in and we don't specify MEET, the default should be ZOOM. 
 
 If any field is uncertain, set the value to UNKNOWN.
-
 ---
 
 My name is ${name_str}. The current date is ${todayStr}
@@ -81,17 +81,17 @@ export async function callGpt3(prompt) {
             headers: headers,
             body: JSON.stringify(params),
         });
-        // console.log(response)
+
         const jsonResponse = await response.json();
-        // console.log(jsonResponse)
+        // console.log("jsonResponse",jsonResponse)
         let output = `${prompt}${jsonResponse.choices[0].text}`;
-        // console.log(output);
+        // console.log("output",output);
         let dsl_out_txt = parseGpt3Output(output);
         // console.log("dsl");
         // console.log(dsl_out_txt);
         let dsl_out_json = JSON.parse(dsl_out_txt);
         // console.log("dsl parsed");
-        console.log(dsl_out_json);
+        // console.log(dsl_out_json);
         return dsl_out_json;
     } catch (err) {
         console.log(err);
@@ -108,10 +108,10 @@ export function parseGpt3Output(gptOutput) {
 
     // TODO: If you change the prompt, make sure the parsing logic is still correct!
     const prefix = '6. Output:';
-    // console.log(gptOutput)
     const lines = gptOutput.split('\n');
     const outputLine = lines.find(line => line.startsWith(prefix));
     const prefixIndex = outputLine.indexOf(prefix);
+    console.log("PREFIX+INPUT",outputLine.substring(prefixIndex + prefix.length))
     return outputLine.substring(prefixIndex + prefix.length);
 }
 
@@ -145,5 +145,7 @@ export function askModelForDslMeetingHardcoded(natural_language_command, user) {
 }
 
 
-// let output = askModelForDslMeeting("Create a 45 minute zoom meeting on December 9th at 10am about the product launch. Include Elaine and Fatima", "Adept");
-// console.log(output);
+// askModelForDslMeeting("Setup an interview with Sylvia next week Monday at 2pm. Include a Google meet invite.", "Adept")
+// .then(output => {
+//     console.log("The resolved value:", output);
+//   })

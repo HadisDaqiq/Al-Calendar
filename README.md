@@ -9,6 +9,11 @@ By default, we will use `npm install` && `npm run start` to test the completed p
 ## Must-have requirements
 
 - The UI should show meetings for a day or a week. Whether to have a day view, week view or both is up to you.
+<!-- show meetings of the week in a calendar like UI -->
+<!-- the user can click on detail to see the meeting info -->
+<!-- input user detail to get the prompt and then add to the calendar -->
+<!-- the user is going to take a list of commands and add those to the calendar -->
+
 - The user should be able to see details of a specific meeting.
 - Natural language should be entered by the user in order to create meetings. 
 - Users should also be able to change the details of specific meetings. This should be done with traditional (i.e. non-natural language) UI elements. (If you would like to do this with natural language, note that the existing function won't work. It will require some additional prefix prompt setup work to ensure that the model sees the original details of the meeting to be changed). 

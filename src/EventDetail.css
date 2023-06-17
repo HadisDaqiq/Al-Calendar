@@ -1,0 +1,15 @@
+modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-btn,
+  .close-btn {
+    margin-left: 10px;
+  }
