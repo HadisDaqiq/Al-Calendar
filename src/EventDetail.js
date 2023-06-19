@@ -11,7 +11,7 @@ function EventDetail({ eventData, isOpen, onClose, onSave }) {
   const start_time_str = startDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   const end_time = new Date(startDate.getTime() + (DURATION) * 60 * 1000);
   const end_time_str = end_time.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  
+
   let video_str;
   if (VIDEO === 'MEET') {
     video_str = 'Google Meet';
@@ -57,7 +57,7 @@ function EventDetail({ eventData, isOpen, onClose, onSave }) {
             {startDate.toDateString()} {start_time_str} - {end_time_str}
           </p>
           <p>
-            <strong>Attendees:</strong> {ATTENDEES === "Adept" ? "You" : ATTENDEES}
+            <strong>Attendees:</strong> {ATTENDEES.includes("Adept") ? ATTENDEES.replace("Adept", "You") : ATTENDEES}
           </p>
           <p>
             <strong>Location:</strong> {video_str}

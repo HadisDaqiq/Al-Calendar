@@ -1,13 +1,14 @@
-import "./App.css";
-import format from "date-fns/format";
-import getDay from "date-fns/getDay";
-import parse from "date-fns/parse";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState, useEffect } from "react";
-import { startOfWeek, addDays } from "date-fns";
-import AddEvent from "./AddEvent";
-import EventDetail from "./EventDetail";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import format from 'date-fns/format';
+import getDay from 'date-fns/getDay';
+import parse from 'date-fns/parse';
+import { startOfWeek } from 'date-fns';
+import AddEvent from './AddEvent';
+import EventDetail from './EventDetail';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 const App = () => {
   const [isEventDetailModalOpen, setEventDetailModalOpen] = useState(false);
@@ -17,33 +18,31 @@ const App = () => {
   const [events, setEvents] = useState([
     {
       ID: 1,
-      TITLE: "Product Launch",
-      ATTENDEES: "Adept, Elaine, Fatima",
-      START_TIME: new Date("2023-05-22T10:30:00Z"),
+      TITLE: 'Product Launch',
+      ATTENDEES: 'Adept, Elaine, Fatima',
+      START_TIME: new Date('2023-05-22T10:30:00Z'),
       DURATION: 45,
-      VIDEO: "ZOOM",
+      VIDEO: 'ZOOM',
     },
     {
       ID: 2,
-      TITLE: "Project Review",
-      ATTENDEES: "Adept, John Smith, Jane Doe",
-      START_TIME: new Date("2023-05-26T11:30:00Z"),
+      TITLE: 'Project Review',
+      ATTENDEES: 'Adept, John Smith, Jane Doe',
+      START_TIME: new Date('2023-05-26T11:30:00Z'),
       DURATION: 60,
-      VIDEO: "MEET",
+      VIDEO: 'MEET',
     },
     {
       ID: 3,
-      TITLE: "Interview with Sylvia",
-      ATTENDEES: "Adept, Sylvia",
-      START_TIME: new Date("2023-05-25T08:00:00"),
+      TITLE: 'Interview with Sylvia',
+      ATTENDEES: 'Adept, Sylvia',
+      START_TIME: new Date('2023-05-25T08:00:00'),
       DURATION: 60,
-      VIDEO: "MEET",
+      VIDEO: 'MEET',
     },
   ]);
 
   useEffect(() => {
-    // Perform any additional logic or side effects here
-    // This code will run whenever the `events` state changes
     const formattedEvents = events.map((event) => ({
       id: event.ID,
       title: event.TITLE,
@@ -54,24 +53,22 @@ const App = () => {
     }));
 
     const locales = {
-      "en-US": require("date-fns/locale/en-US"),
+      'en-US': require('date-fns/locale/en-US'),
     };
 
-    const startOfWeekWithMonday = (date) => {
-      const modifiedDate = startOfWeek(date);
-      return modifiedDate.getDay() === 0 ? addDays(modifiedDate, 1) : modifiedDate;
+    const startOfWeekWithSunday = (date) => {
+      const modifiedDate = startOfWeek(date, { weekStartsOn: 0 }); // Set weekStartsOn option to 0 (Sunday)
+      return modifiedDate;
     };
 
-    const localizer = dateFnsLocalizer({
+    const localizer = {
       format,
       parse,
-      startOfWeek: (date) => (getDay(date) === 0 ? date : startOfWeekWithMonday(date)),
+      startOfWeek: (date) => (getDay(date) === 0 ? startOfWeekWithSunday(date) : date),
       getDay,
       locales,
-    });
+    };
 
-    // Update the localizer and formatted events
-    // You can set them as separate states if needed
     setLocalizer(localizer);
     setFormattedEvents(formattedEvents);
   }, [events]);
@@ -89,14 +86,15 @@ const App = () => {
     setEvents((prevEvents) => [...prevEvents, newEvent]);
   };
 
-  const handleSelectEvent = (event) => {
+  const handleSelectEvent = (clickInfo) => {
+    const event = clickInfo.event;
     const formattedEvent = {
       ID: event.id,
       TITLE: event.title,
-      ATTENDEES: event.attendees,
+      ATTENDEES: event.extendedProps.attendees,
       START_TIME: new Date(event.start),
       DURATION: (event.end - event.start) / 60000,
-      VIDEO: event.video,
+      VIDEO: event.extendedProps.video,
     };
 
     setSelectedEvent(formattedEvent);
@@ -109,26 +107,28 @@ const App = () => {
   };
 
   const handleSaveEvent = (data) => {
-    const updatedEvent = { ...selectedEvent, ...data };
+    const updatedEvent = { ...selectedEvent, ...data };   
     const updatedEvents = events.map((event) =>
-      event.ID === selectedEvent.ID ? updatedEvent : event
+      String(event.ID) === selectedEvent.ID ? updatedEvent : event
     );
-
     setEvents(updatedEvents);
   };
-
-
 
   return (
     <>
       {localizer && formattedEvents && (
-        <Calendar
-        localizer={localizer}
-        events={formattedEvents}
-        style={{ height: 500, margin: "50px" }}
-        defaultView="week"
-        onSelectEvent={handleSelectEvent}
-      />
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          }}
+          initialView="timeGridWeek"
+          locale="en-US"
+          events={formattedEvents}
+          eventClick={handleSelectEvent}
+        />
       )}
 
       <div className="popup">

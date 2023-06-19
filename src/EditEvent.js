@@ -10,7 +10,6 @@ import moment from 'moment';
 function EditEvent({ isOpen, onClose, onSave, eventData }) {
 
   const [eventDataState, setEventDataState] = useState(eventData);
-  console.log("eventDataState.ATTENDEES: ",eventDataState.ATTENDEES)
   const [attendees, setAttendees] = useState(eventDataState.ATTENDEES ? eventDataState.ATTENDEES.split(','): []);
   const startTime = moment(eventData.START_TIME);
   const formattedTime = startTime.format('HH:mm');
