@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import '@testing-library/jest-dom';
 
-test('renders learn react link', () => {
+test('renders the FullCalendar component', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  const calendarElement = screen.getByRole('grid');
+  expect(calendarElement).toBeInTheDocument();
+
+  const prevButton = screen.getByTitle('Previous week');
+  expect(prevButton).toBeInTheDocument();
+
 });

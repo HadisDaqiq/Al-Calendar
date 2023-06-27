@@ -4,6 +4,7 @@ import EditEvent from "./EditEvent";
 import React, { useState } from "react";
 import './EventDetail.css';
 
+// Displays selected event's detail
 function EventDetail({ eventData, isOpen, onClose, onSave }) {
   const { START_TIME, DURATION, TITLE, ATTENDEES, VIDEO } = eventData;
   const startDate = new Date(START_TIME);

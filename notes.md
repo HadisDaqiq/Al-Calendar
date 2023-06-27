@@ -6,11 +6,25 @@ accuratly as possiable -->
 <!-- writing a command is the same amount of work for me as if i were to go to my google calendar and manually add
 event, I would personally use this calendar app if its voice integrated that way this app becomes my personal assistant to schedule things -->
 
-<!-- i decided to go by week. Showing just a day's events is too constraining and the user have to go through more steps to just add events and check if it had been added 
-similarly adding the whole month seemed that we are providing two many days to the user at onces and creating more visual noise -->
-<!-- "input": "Create a short team-wide meeting at 2pm this Friday. Someone might need to zoom in.",  Instead of choosing the upcoming "friday" It add the event 1 week from the current date This is a ChatGPT api response issue 
+<!-- 
+
+API's response to START_TIME is inaccurate with prompt:
+"Invite everyone to a new 1 hour all-hands to start off the week next week. Have it at the beginning of the day" 
+
+In one case:
+if today is thrusday, it returns next week on friday. meaning api is adding 8 days to current day and returning, instead of calculating when next week starts. 
+In another case:
+it returns the end of this week/friday. 
+
+This is not due to changes made in createPromptPrefix function to use moment. it seems to be chatgpt3's problem.
 
 
-saved the start_date as DATE type to allow to work with the dates more easily ->
+Again api's response is inconsistant sometimes it abides by defaulting meetings that has no specific DURATION to the 30mins value and somtimes it changes it to 60 mins.
+
+Changed the prompt(in createPromptPrefix func) in an attempt to make it easier to register 30 min default value. it sometimes work and sometimes doesnt.
+
+
+A solution would be to hardcode these logic. 
+these can be hard coded for now ->
 
 

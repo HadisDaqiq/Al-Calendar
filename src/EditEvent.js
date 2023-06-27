@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 
-// Updates selected calendar event
+// Updates selected calendar event detail
 function EditEvent({ isOpen, onClose, onSave, eventData }) {
 
   const [eventDataState, setEventDataState] = useState(eventData);

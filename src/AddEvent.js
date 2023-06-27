@@ -1,46 +1,58 @@
 import React, { useState } from 'react';
-import moment from 'moment-timezone';
-import EventDetail from './EventDetail';
 import { askModelForDslMeeting } from './lib/gpt';
 import './AddEvent.css';
 
+/** Add event to calendar given user input */
 const AddEvent = ({ addEvent }) => {
   const [isMinimized, setIsMinimized] = useState(false);
-
-
 
   const handleMinimizeClick = () => {
     setIsMinimized(!isMinimized);
     const container = document.querySelector('.add-event-container');
-    container.style.height = isMinimized ? '280px' : '30px';
+    if (!isMinimized) {
+      container.style.height = '30px';
+    } else {
+      container.style.height = '280px';
+    }
   };
 
   const createEvent = async (input) => {
-    const userInput = `input: ${input}`;
-
     try {
-      const response = await askModelForDslMeeting(userInput, 'Adept');
+      const response = await askModelForDslMeeting(input, 'Adept');
       let output = response;
-
-      const adjustedStartDate = new Date(output.START_TIME);
-
-      output.START_TIME = adjustedStartDate;
-      console.log('After input user categorized:', output);
+      console.log("output right after askmodel",output)
+      // Adjust the weekday: If userInput contains any day of the week, increment the day in output
+      const weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+      const dateString = output.START_TIME;
+      const dateObjStart = new Date(Date.parse(dateString));
+      const userInputLowercase = input.toLowerCase();
+      console.log("dateObjStart new Date changes the hour? ",output)
+      for (const weekday of weekdays) {
+        if (userInputLowercase.includes(weekday)) {
+          while (dateObjStart.getDay() !== weekdays.indexOf(weekday)) {
+            dateObjStart.setDate(dateObjStart.getDate() + 1);
+          }
+          break;
+        }
+      }
+    
+      output.START_TIME = dateObjStart;
+      
       addEvent(output);
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
     }
   };
 
   return (
     <div className="add-event-container">
-      <div className="add-event-header">
+      <div className={"add-event-header"}>
         <span>New Event</span>
         <button className="add-event-minimize-button" onClick={handleMinimizeClick}>
           {isMinimized ? '+' : 'x'}
         </button>
       </div>
-      {!isMinimized && (
+      {!isMinimized &&
         <div className="chat-popup">
           <textarea
             placeholder="Type your message here"
@@ -54,7 +66,7 @@ const AddEvent = ({ addEvent }) => {
             }}
           />
         </div>
-      )}
+      }
     </div>
   );
 };

@@ -3,7 +3,6 @@ import './App.css';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import parse from 'date-fns/parse';
-import { startOfWeek } from 'date-fns';
 import AddEvent from './AddEvent';
 import EventDetail from './EventDetail';
 import FullCalendar from '@fullcalendar/react';
@@ -20,7 +19,7 @@ const App = () => {
       ID: 1,
       TITLE: 'Product Launch',
       ATTENDEES: 'Adept, Elaine, Fatima',
-      START_TIME: new Date('2023-05-22T10:30:00Z'),
+      START_TIME: new Date('2023-06-28T10:30:00Z'),
       DURATION: 45,
       VIDEO: 'ZOOM',
     },
@@ -28,7 +27,7 @@ const App = () => {
       ID: 2,
       TITLE: 'Project Review',
       ATTENDEES: 'Adept, John Smith, Jane Doe',
-      START_TIME: new Date('2023-05-26T11:30:00Z'),
+      START_TIME: new Date('2023-06-26T11:30:00Z'),
       DURATION: 60,
       VIDEO: 'MEET',
     },
@@ -36,7 +35,7 @@ const App = () => {
       ID: 3,
       TITLE: 'Interview with Sylvia',
       ATTENDEES: 'Adept, Sylvia',
-      START_TIME: new Date('2023-05-25T08:00:00'),
+      START_TIME: new Date('2023-07-12T08:00:00'),
       DURATION: 60,
       VIDEO: 'MEET',
     },
@@ -52,28 +51,17 @@ const App = () => {
       video: event.VIDEO,
     }));
 
-    const locales = {
-      'en-US': require('date-fns/locale/en-US'),
-    };
-
-    const startOfWeekWithSunday = (date) => {
-      const modifiedDate = startOfWeek(date, { weekStartsOn: 0 }); // Set weekStartsOn option to 0 (Sunday)
-      return modifiedDate;
-    };
-
     const localizer = {
       format,
       parse,
-      startOfWeek: (date) => (getDay(date) === 0 ? startOfWeekWithSunday(date) : date),
       getDay,
-      locales,
     };
 
     setLocalizer(localizer);
     setFormattedEvents(formattedEvents);
   }, [events]);
 
-  const handleAddEvent = (newEvent) => {
+  const addEvent = (newEvent) => {
     newEvent = {
       ID: events.length + 1,
       TITLE: newEvent.TITLE,
@@ -82,7 +70,6 @@ const App = () => {
       DURATION: newEvent.DURATION,
       VIDEO: newEvent.VIDEO,
     };
-
     setEvents((prevEvents) => [...prevEvents, newEvent]);
   };
 
@@ -107,7 +94,7 @@ const App = () => {
   };
 
   const handleSaveEvent = (data) => {
-    const updatedEvent = { ...selectedEvent, ...data };   
+    const updatedEvent = { ...selectedEvent, ...data };
     const updatedEvents = events.map((event) =>
       String(event.ID) === selectedEvent.ID ? updatedEvent : event
     );
@@ -125,14 +112,13 @@ const App = () => {
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
           }}
           initialView="timeGridWeek"
-          locale="en-US"
           events={formattedEvents}
           eventClick={handleSelectEvent}
         />
       )}
 
       <div className="popup">
-        <AddEvent addEvent={handleAddEvent} />
+        <AddEvent addEvent={addEvent} />
       </div>
 
       {selectedEvent && (
